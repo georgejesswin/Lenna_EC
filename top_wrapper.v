@@ -1,6 +1,6 @@
 `timescale 1ns / 1ps
 
-module image_ip
+module top_wrapper
 (
     input wire i_top_clk,
     input wire i_top_rst,
@@ -139,7 +139,7 @@ wire [23:0] proc_out_pixel;
 wire proc_out_valid;
 wire proc_ready;
 
-top_wrapper
+image_process_wrapper
 #(
     .DATA_W(8),
     .IMG_WIDTH(640)
