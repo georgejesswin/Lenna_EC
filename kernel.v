@@ -1,7 +1,8 @@
 module kernel_selector (
-    input  wire [6:0] kernel_sel, 
+    input  wire [6:0] kernel_sel,  
     output reg  signed [71:0] kernel_out,
-    output reg  [7:0] norm_factor   // normalization divisor
+    output reg  [7:0] norm_factor,    // normalization divisor
+    output reg signed [71:0] kernel_alt
 );
 
     // =========================================================
@@ -50,9 +51,15 @@ module kernel_selector (
     always @(*) begin
         // Default
         kernel_out  = K_IDENTITY;
+        kernel_alt = K_IDENTITY;
         norm_factor = 8'd1;
 
         case (1'b1)
+            kernel_sel[6]: begin
+                kernel_out  = K_SOBEL_X;
+                norm_factor = 8'd1;  // sum = 1
+                kernel_alt = K_SOBEL_Y;
+            end
             kernel_sel[5]: begin
                 kernel_out  = K_SHARPEN;
                 norm_factor = 8'd1;  // sum = 1
@@ -84,5 +91,6 @@ module kernel_selector (
             end
         endcase
     end
+    
 
 endmodule
