@@ -1,6 +1,6 @@
 `timescale 1ns / 1ps
 
-module top_wrapper
+module image_ip
 (
     input wire i_top_clk,
     input wire i_top_rst,
@@ -8,6 +8,8 @@ module top_wrapper
     input wire  i_top_cam_start,
     output wire o_top_cam_done,
     input wire [6:0] kernel_sel,
+    input wire negative,
+    input wire gray_scale,
 
     // Camera
     input wire       i_top_pclk,
@@ -155,6 +157,8 @@ image_processing
     .in_valid(cam_pix_wr & proc_ready),
 
     .kernel_sel(kernel_sel),
+    .gray_scale(gray_scale),
+    .neg(negative),
 
     .s_out_ready(proc_ready),
 
