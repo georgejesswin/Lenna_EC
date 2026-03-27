@@ -49,7 +49,7 @@ The system includes a dynamic kernel selector that allows switching between filt
 - **Sharpen:** Enhances high-frequency components
 - **Box Blur & Gaussian Blur:** Smooths image using low-pass filtering
 - **Image Inversion:** Hardware-level color inversion with zero added latency
-
+- **Grayscale Conversion:** Converts the 24-bit RGB stream into monochrome using a hardware-efficient luminance approximation
 ---
 
 ## Repository Structure
@@ -71,6 +71,15 @@ The system includes a dynamic kernel selector that allows switching between filt
 
 - `kernel.v`  
   Provides predefined `3×3` kernels and normalization factors
+
+- `rgb_to_gray.v`
+  Converts a 24-bit RGB pixel into an 8-bit grayscale pixel using a hardware-efficient luminance approximation weighted for human vision
+
+- `gray2rgb.v`
+  Handles bit-depth expansion for video interfaces by duplicating the 8-bit grayscale value across the Red, Green, and Blue channels
+
+- `sobel_edge.v`
+  Processes the raw horizontal and vertical gradients to produce a binarized, high-contrast RGB edge map based on a parameterized threshold
 
 - `Nexys-A7-100T-Master.xdc`  
   FPGA constraint file for pin configuration
