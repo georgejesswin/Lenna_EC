@@ -1,14 +1,11 @@
 # Lenna: FPGA-Based Real-Time Image Processing System
 
-A high-performance hardware accelerator designed for real-time image filtering on an FPGA.  
-By employing a fully pipelined streaming architecture, this system exploits spatial parallelism to achieve minimal latency and high throughput for complex digital signal processing (DSP) tasks.
+A high-performance image processing system implemented on an FPGA. 
 
 ---
 
 ## Overview
 This project captures continuous video frames from an external camera, processes the pixel stream through dedicated hardware modules, and outputs the filtered result to a monitor in real time.
-
-The architecture utilizes a unidirectional streaming pipeline that processes pixels simultaneously across multiple stages, minimizing CPU intervention and maximizing throughput.
 
 ---
 
@@ -21,10 +18,10 @@ The architecture utilizes a unidirectional streaming pipeline that processes pix
   Parallel execution of spatial filters using hardware-based `3×3` sliding pixel windows.
 
 - **Robust CDC (Clock Domain Crossing):**  
-  Reliable asynchronous frame buffering between the 25 MHz camera clock and the VGA display clock using True Dual-Port BRAM.
+  Reliable asynchronous frame buffering between the 25 MHz camera clock and the VGA display clock using Dual-Port BRAM.
 
 - **High Throughput:**  
-  Sustains exactly one processed pixel per clock cycle after initial buffering (~25M pixels/sec), sufficient for `640×480 @ 60 FPS`.
+  Sustains exactly one processed pixel per clock cycle (~25M pixels/sec) after initial buffering , sufficient for `640×480 @ 60 FPS`.
 
 - **Flow Control:**  
   Implements AXI-Stream compliant backpressure protocols to prevent pipeline stalls and dropped frames.
