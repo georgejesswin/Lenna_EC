@@ -10,6 +10,13 @@ module image_ip
     input wire [6:0] kernel_sel,
     input wire negative,
     input wire gray_scale,
+    input wire red_off,
+    input wire blue_off,
+    input wire green_off,
+    input wire bright,             // Brightness increase
+    input wire dim,                // Brightness decrease
+    input wire thermal_en,         // NEW: Thermal / Heatmap Vision toggle
+    input wire sepia_en,           // NEW: Shift-and-Add Sepia Tone toggle
 
     // Camera
     input wire       i_top_pclk,
@@ -141,6 +148,9 @@ wire [23:0] proc_out_pixel;
 wire proc_out_valid;
 wire proc_ready;
 
+// Create a combined reset that triggers on physical reset OR between camera frames
+wire proc_rstn = r2_rstn_pclk & ~i_top_pix_vsync;
+
 image_process_wrapper
 #(
     .DATA_W(8),
@@ -150,15 +160,24 @@ image_processing
 (
     .clk(i_top_pclk),
 
-    .reset(r2_rstn_pclk),
+    // FIX 1: Use the combined reset to clear line buffers between frames
+    .reset(proc_rstn), 
 
     .in_pixel(proc_in_pixel),
 
-    .in_valid(cam_pix_wr & proc_ready),
+    // FIX 2: Gate the valid signal to ensure no stray pixels enter during vsync
+    .in_valid(cam_pix_wr & proc_ready & ~i_top_pix_vsync), 
 
     .kernel_sel(kernel_sel),
     .gray_scale(gray_scale),
     .neg(negative),
+    .red_off(red_off),
+    .blue_off(blue_off),
+    .green_off(green_off),
+    .bright(bright),              
+    .dim(dim),                
+    .thermal_en(thermal_en),         
+    .sepia_en(sepia_en),           
 
     .s_out_ready(proc_ready),
 
