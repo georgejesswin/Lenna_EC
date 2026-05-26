@@ -88,6 +88,4 @@ The system includes a dynamic kernel selector and bypass logic that allows switc
 
 ---
 
-## Author
-
 **Jesswin George** Electronics Club, IIT Guwahati
