@@ -18,11 +18,11 @@ This project captures continuous video frames from an external camera, processes
 - **Advanced Color Grading & Effects:**
   Dedicated combinatorial logic pipelines for instantaneous color manipulation, including thermal mapping, sepia toning, channel masking, and brightness control without relying on DSP slices.
 
-- **Robust CDC (Clock Domain Crossing):** Reliable asynchronous frame buffering between the 25 MHz camera clock and the VGA display clock using Dual-Port BRAM / AXI-Stream FIFOs.
+- **Robust CDC (Clock Domain Crossing):** Reliable asynchronous frame buffering between the 25 MHz camera clock and the VGA display clock using Dual-Port BRAM.
 
 - **High Throughput:** Sustains exactly one processed pixel per clock cycle (~25M pixels/sec) after initial buffering, sufficient for `640×480 @ 60 FPS`.
 
-- **Flow Control:** Implements AXI-Stream compliant backpressure protocols to prevent pipeline stalls and dropped frames.
+
 
 ---
 
